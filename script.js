@@ -179,6 +179,4 @@ function checkTable() {
     return true;
 }
 
-function restart() {
-    initialize();
-}
+let restart = () => initialize();
