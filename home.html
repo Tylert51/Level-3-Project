@@ -17,7 +17,15 @@
 
 <body onload="initialize();">
 	<h1>Slider Puzzle Game</h1>
-  <h2>Score : </h2>
+	<div>
+		<h2>Score : <span id = "scoreOut">0</span></h2>
+		
+		<button id = "startButton" onclick="start();">Start</button>
+		<br />
+		<br />
+		<br />
+		
+	</div>
 	<table id="sliderTable">
 		<tr>
 			<td id="0_0">1</td>
@@ -47,6 +55,13 @@
 			<td id="3_3">null</td>
 		</tr>
 	</table>
+
+	<div>
+		<br/>
+		<br/>
+		
+		<button id = "restartButton" onclick = "restart();">Restart</button>
+	</div>
 
 </body>
 

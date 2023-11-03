@@ -4,6 +4,12 @@ h1
     text-align: center;
 }
 
+h2
+{
+    font-size: 30px;
+    text-align: center;
+}
+
 table
 {
     border:thick solid gray;
@@ -22,4 +28,12 @@ td
     padding: 10px;
     width: 70px;
     height: 80px;
+}
+
+div {
+    text-align: center;
+}
+
+button {
+    font-size: 25px;
 }

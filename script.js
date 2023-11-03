@@ -1,5 +1,9 @@
 let table, tableValues,
-    tileClickedIndex, score, emptyIndex;
+    score, emptyIndex,
+    scoreSpan, startBut,
+    isStarted, isFinished,
+    msg,
+    displayMsg;
 
 
 
@@ -7,17 +11,22 @@ function initialize() {
 
     table = [];
     tableValues =
-        [
-            [1, 2, 3, 4],
-            [5, 6, 7, 8],
-            [9, 10, 11, 12],
-            [13, 14, 15, null]
-        ];
+    [
+        ["1","2","3","4"],
+        ["5","6","7","8"],
+        ["9","10","11","12"],
+        ["13","14","15",null]
+    ];
     
-
-    tileClickedIndex = null;
     score = 0;
-    start = false;
+    isStarted = false;
+    isFinished = false;
+
+    scoreSpan = document.getElementById("scoreOut");
+    startBut = document.getElementById("startButton");
+    msg = document.querySelector("h1");
+    displayMsg = "Slider Puzzle Game";
+
     updateEmptyIndex();
 
     initializeTable();
@@ -37,29 +46,48 @@ function initializeTable() {
     }
 }
 
-function start(){
-    
+function start() {
+    isStarted = true;
+    display();    
 }
 function changeTiles(index) {
-
+    if (!isFinished) {
     
-    updateEmptyIndex();
-    let row = parseInt(index.substring(0, 1));
-    let col = parseInt(index.substring(2));
-    
-    let cell = [row,col];
-    let adjacentTiles = getAdjacentTiles();
+        updateEmptyIndex();
+        let row = parseInt(index.substring(0, 1));
+        let col = parseInt(index.substring(2));
+        
+        let cell = [row,col];
+        let adjacentTiles = getAdjacentTiles();
 
-    if (doesContain(adjacentTiles, cell.toString())) {
-        let clickedCell = table[row][col];
-        let emptyCell = table[emptyIndex.substring(0,1)][emptyIndex.substring(2)];
+        if (doesContain(adjacentTiles, cell.toString())) {
+            let clickedCell = table[row][col];
+            let emptyCell = table[emptyIndex.substring(0,1)][emptyIndex.substring(2)];
 
-        emptyCell.innerHTML = clickedCell.innerHTML;
-        clickedCell.innerHTML = null;
+            emptyCell.innerHTML = clickedCell.innerHTML;
+            clickedCell.innerHTML = null;
+
+            updateEmptyIndex();
+            updateTable();
+            display();
+
+            if(isStarted) {
+                score++;
+                display();
+
+                console.log(checkTable());
+                console.log(tableValues);
+
+                if(checkTable()) {
+                    isFinished = true;
+                    displayMsg = `congrats on beating the game with a score of ${score}!`;
+                    display();
+                }
+            }
+        }
+
     }
-    updateEmptyIndex();
-    updateTable();
-    display();
+    
 }
 
 function getAdjacentTiles() {
@@ -87,6 +115,11 @@ function display() {
             
         }
     }
+
+    scoreSpan.innerHTML = score;
+    msg.innerHTML = displayMsg;
+
+    startBut.style.backgroundColor = (!isStarted) ? "#53d439" : "#d10a32";
 }
 
 function updateEmptyIndex() {
@@ -123,4 +156,29 @@ function updateTable() {
             
         }
     }
+}
+
+function checkTable() {
+    let answerKey = [
+        ["1","2","3","4"],
+        ["5","6","7","8"],
+        ["9","10","11","12"],
+        ["13","14","15",""]
+    ];
+
+    console.log(answerKey);
+
+    for(let i = 0; i < 4; i++) {
+        for(let j = 0; j < 4; j++) {
+            if(answerKey[i][j] !== tableValues[i][j]) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+function restart() {
+    initialize();
 }
