@@ -50,6 +50,7 @@ function start() {
     isStarted = true;
     display();    
 }
+
 function changeTiles(index) {
     if (!isFinished) {
     
@@ -180,3 +181,58 @@ function checkTable() {
 }
 
 let restart = () => initialize();
+
+function shuffle() {
+
+    let adjacentTiles;
+
+    for(let i = 0; i < 1000; i++) {
+        adjacentTiles = getAdjacentTiles();
+        let rand = getRandomNum(0, adjacentTiles.length - 1);
+
+        changeTiles2(adjacentTiles[rand]);
+    }
+
+}
+
+function getRandomNum(low, high) {
+    return parseInt(Math.random() * (high - low + 1) + low);
+}
+
+function changeTiles2(arr) {
+    
+    updateEmptyIndex();
+    let row = arr[0];
+    let col = arr[1];
+    
+    let cell = [row,col];
+    let adjacentTiles = getAdjacentTiles();
+
+    if (doesContain(adjacentTiles, cell.toString())) {
+        let clickedCell = table[row][col];
+        let emptyCell = table[emptyIndex.substring(0,1)][emptyIndex.substring(2)];
+
+        emptyCell.innerHTML = clickedCell.innerHTML;
+        clickedCell.innerHTML = null;
+
+        updateEmptyIndex();
+        updateTable();
+        display();
+
+        if(isStarted) {
+            score++;
+            display();
+
+            console.log(checkTable());
+            console.log(tableValues);
+
+            if(checkTable()) {
+                isFinished = true;
+                displayMsg = `congrats on beating the game with a score of ${score}!`;
+                display();
+            }
+        }
+        
+
+    }
+}
