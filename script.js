@@ -120,7 +120,7 @@ function display() {
     scoreSpan.innerHTML = score;
     msg.innerHTML = displayMsg;
 
-    startBut.style.backgroundColor = (!isStarted) ? "#53d439" : "#d10a32";
+    startBut.style.backgroundColor = (!isStarted) ? "#DFE0E2" : "#D81159";
 }
 
 function updateEmptyIndex() {
